@@ -1,6 +1,5 @@
 package main // import "github.com/Anteoy/go-trial"
 
-
 /////
 // Simple example of usage
 //
@@ -11,9 +10,10 @@ package main // import "github.com/Anteoy/go-trial"
 import "C"
 import (
 	"fmt"
-	"github.com/Anteoy/go-trial/mmm"
 	"log"
 	"unsafe"
+
+	"github.com/Anteoy/go-trial/mmm"
 )
 
 type Coordinate struct {
@@ -39,7 +39,10 @@ func main() {
 
 	// print {17,2}
 	fmt.Println((*Coordinate)(mc.Read(1).(unsafe.Pointer)))
+	fmt.Println(*(*Coordinate)(mc.Read(1).(unsafe.Pointer)))
+	fmt.Println(*(*Coordinate)(mc.Read(2).(unsafe.Pointer)))
 	// print {42,42}
+	fmt.Println(*((*Coordinate)(unsafe.Pointer(mc.Pointer(2)))))
 	fmt.Println(*((*Coordinate)(unsafe.Pointer(mc.Pointer(2)))))
 
 	// free memory chunk
@@ -62,33 +65,33 @@ func test3() {
 	// print 3
 	fmt.Println(mc.NbObjects())
 
-	a := make([]byte,10)
-	for i := 0; i< len(a); i++ {
+	a := make([]byte, 10)
+	for i := 0; i < len(a); i++ {
 		a[i] = byte(i)
 	}
 	// write {3,9} at index 0, then print {3,9}
 	fmt.Println(mc.Write(0, unsafe.Pointer(&a)))
 
-	b := make([]byte,10)
-	for i := 0; i< len(b); i++ {
-		b[i] = byte(i+10)
+	b := make([]byte, 10)
+	for i := 0; i < len(b); i++ {
+		b[i] = byte(i + 10)
 	}
 	// write {17,2} at index 1, then print {17,2}
 	fmt.Println(mc.Write(1, unsafe.Pointer(&b)))
 	// write {42,42} at index 2, then print {42,42}
 
-	c := make([]byte,10)
-	for i := 0; i< len(b); i++ {
-		c[i] = byte(i+100)
+	c := make([]byte, 10)
+	for i := 0; i < len(b); i++ {
+		c[i] = byte(i + 100)
 	}
 	fmt.Println(mc.Write(2, unsafe.Pointer(&c)))
 
 	// print {17,2}
-	d := make([]byte,10)
-	for i := 0; i< len(b); i++ {
-		d[i] = byte(i+1020)
+	d := make([]byte, 10)
+	for i := 0; i < len(b); i++ {
+		d[i] = byte(i + 1020)
 	}
-	e :=(*[]byte)(mc.Read(1).(unsafe.Pointer))
+	e := (*[]byte)(mc.Read(1).(unsafe.Pointer))
 	fmt.Printf("%+v \n", e)
 	// print {42,42}
 	fmt.Println(*((*[]byte)(unsafe.Pointer(mc.Pointer(2)))))
@@ -109,33 +112,33 @@ func test() {
 	// print 3
 	fmt.Println(mc.NbObjects())
 
-	a := make([]byte,10)
-	for i := 0; i< len(a); i++ {
+	a := make([]byte, 10)
+	for i := 0; i < len(a); i++ {
 		a[i] = byte(i)
 	}
 	// write {3,9} at index 0, then print {3,9}
 	fmt.Println(mc.Write(0, a))
 
-	b := make([]byte,10)
-	for i := 0; i< len(b); i++ {
-		b[i] = byte(i+10)
+	b := make([]byte, 10)
+	for i := 0; i < len(b); i++ {
+		b[i] = byte(i + 10)
 	}
 	// write {17,2} at index 1, then print {17,2}
 	fmt.Println(mc.Write(1, b))
 	// write {42,42} at index 2, then print {42,42}
 
-	c := make([]byte,10)
-	for i := 0; i< len(b); i++ {
-		c[i] = byte(i+100)
+	c := make([]byte, 10)
+	for i := 0; i < len(b); i++ {
+		c[i] = byte(i + 100)
 	}
 	fmt.Println(mc.Write(2, c))
 
 	// print {17,2}
-	d := make([]byte,10)
-	for i := 0; i< len(b); i++ {
-		d[i] = byte(i+1020)
+	d := make([]byte, 10)
+	for i := 0; i < len(b); i++ {
+		d[i] = byte(i + 1020)
 	}
-	d,e :=mc.Read(1).([]byte)
+	d, e := mc.Read(1).([]byte)
 	fmt.Printf("%+v , %s\n", d, e)
 	// print {42,42}
 	fmt.Println(*((*[]byte)(unsafe.Pointer(mc.Pointer(2)))))

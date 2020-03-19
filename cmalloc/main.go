@@ -1,4 +1,4 @@
-package main_test
+package main
 
 /*
    #include <stdio.h>
@@ -23,7 +23,7 @@ func main() {
 	var tmp *C.char
 
 	// 分配空间, 并判断是否分配成功
-	t.s  = (*C.char)(C.malloc(C.size_t(100)))
+	t.s = (*C.char)(C.malloc(C.size_t(100)))
 	if t.s == nil {
 		//if t.s == (*C.char)(unsafe.Pointer(uintptr(0))) {
 		panic("malloc failed!\n")
@@ -38,12 +38,11 @@ func main() {
 	// 调用C的strncpy函数复制
 	C.strncpy(t.s, ch, C.size_t(len(s)))
 	// C的指针操作
-	for i := C.size_t(0); i < C.strlen(t.s); i ++ {
+	for i := C.size_t(0); i < C.strlen(t.s); i++ {
 		tmp = (*C.char)(unsafe.Pointer(uintptr(unsafe.Pointer(t.s)) + uintptr(i)))
 		*tmp = C.char(C.toupper(C.int(*tmp)))
 	}
 
 	fmt.Printf("%s\n", C.GoString(t.s))
 	fmt.Printf("sizeof struct t is %v\n", unsafe.Sizeof(t))
-	}
-
+}
